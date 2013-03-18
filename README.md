@@ -32,13 +32,11 @@ end
 big_processing_array = BigProcessing::Array.new
 document_urls = Document.all.map {|d| d.url}   # ActiveRecord example. This could be anything, all you need is an Array.
 
-document_urls.each_slice(50) do |slice|
-  slice.each do |url|
-    op = BigProcessing::Operation
-    op.worker_name = "extract_names"
-    op.input = {"url" => url}
-    big_processing_array << op.begin_immediately!
-  end
+document_urls.each_slice(50) do |urls|
+  op = BigProcessing::Operation.new
+  op.worker_name = "extract_names"
+  op.input = {"urls" => urls}
+  big_processing_array << op.begin_immediately!
 end
 
 results = big_processing_array.process! # blocks until all `Operation`s have finished.
