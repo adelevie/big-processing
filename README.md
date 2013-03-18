@@ -24,6 +24,8 @@ require 'big-processing'
 BigProcessing::Configuration do |c|
   c.ironio_project_id = "abcdefgh"
   c.ironio_token      = "12345678"
+  c.aws_id            = "ijklmnop"
+  c.aws_token         = "910111213"
 end
 
 big_processing_array = BigProcessing::Array.new
