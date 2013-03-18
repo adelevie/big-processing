@@ -13,6 +13,9 @@ module Configuration
       "aws" => {
         "token" => "456",
         "id"    => "def"
+      },
+      "calais" => {
+        "license_id" => "789"
       }
     }
   end

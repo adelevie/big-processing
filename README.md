@@ -34,7 +34,7 @@ document_urls = Document.all.map {|d| d.url}   # ActiveRecord example. This coul
 
 document_urls.each_slice(50) do |urls|
   op = BigProcessing::Operation.new
-  op.worker_name = "extract_names"
+  op.worker_name = "extract_tags"
   op.input = {"urls" => urls}
   big_processing_array << op.begin_immediately!
 end
