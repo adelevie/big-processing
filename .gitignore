@@ -50,4 +50,4 @@ pkg
 
 # For IronWorker
 
-test/workers/configuration.rb
+test/configuration.rb
