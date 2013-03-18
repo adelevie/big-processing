@@ -1,6 +1,53 @@
 # big-processing
 
-Description goes here.
+## What?
+
+This library allows you to split up work by sending big processing tasks to IronWorker instances.
+
+## Why?
+
+I'm using it to process the thousands of government documents stored on [Dokket.com](http://dokket.com). This library adds a small layer of abstraction over IronWorker, allowing you to focus on writing simple Ruby code.
+
+`big-processing` means you don't have to worry about:
+
+1. Amazon EC2
+2. Threads
+3. Complicated computer science things
+
+The goal of this library is provide an API that feels as much like plain Ruby code as possible, while unleashing the power of tens, hundreds, or thousands of cloud-based compute instances.
+
+## Usage
+
+```ruby
+require 'big-processing'
+
+BigProcessing::Configuration do |c|
+  c.ironio_project_id = "abcdefgh"
+  c.ironio_token      = "12345678"
+end
+
+big_processing_array = BigProcessing::Array.new
+document_urls = Document.all.map {|d| d.url}   # ActiveRecord example. This could be anything, all you need is an Array.
+
+document_urls.each_slice(50) do |slice|
+  slice.each do |url|
+    op = BigProcessing::Operation
+    op.worker_name = "extract_names"
+    op.input = {"url" => url}
+    big_processing_array << op.begin_immediately!
+  end
+end
+
+results = big_processing_array.process! # blocks until all `Operation`s have finished.
+```
+
+## Installation
+
+TODO
+
+### Writing Workers
+
+TODO
 
 ## Contributing to big-processing
  
