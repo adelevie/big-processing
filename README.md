@@ -26,6 +26,7 @@ BigProcessing::Configuration do |c|
   c.ironio_token      = "12345678"
   c.aws_id            = "ijklmnop"
   c.aws_token         = "910111213"
+  c.aws_bucket        = "my_cool_project"
 end
 
 big_processing_array = BigProcessing::Array.new
